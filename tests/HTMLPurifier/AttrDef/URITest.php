@@ -22,6 +22,7 @@ class HTMLPurifier_AttrDef_URITest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('news:rec.alt');
         $this->assertDef('nntp://news.example.com/324234');
         $this->assertDef('mailto:bob@example.com');
+        $this->assertDef('tel:+15555555555');
     }
 
     public function testIntegrationWithPercentEncoder()
@@ -78,6 +79,12 @@ class HTMLPurifier_AttrDef_URITest extends HTMLPurifier_AttrDefHarness
     public function testDefaultSchemeNotRemovedInAbsoluteURI()
     {
         $this->assertDef('http://example.com/foo/bar');
+    }
+
+    public function testDefaultSchemeNull()
+    {
+        $this->config->set('URI.DefaultScheme', null);
+        $this->assertDef('foo', false);
     }
 
     public function testAltSchemeNotRemoved()
